@@ -1,26 +1,103 @@
 {% extends 'projects/base.html' %}
 {% load static %}
-{% block title %}{{ project.title }}{% endblock %}
+
+{% block title %}{{ project.title }} - Sluicee{% endblock %}
+
 {% block content %}
-<div class="project-detail">
-    <div class="project-header">
-        <h1>{{ project.title }}</h1>
-        <div class="back-link">
-            <a href="{% url 'project_list' %}">Все проекты</a>
+<div class="project-detail-page">
+    <div class="project-detail">
+        <div class="project-header">
+            <h1>{{ project.title }}</h1>
+            <div class="back-link">
+                <a href="{% url 'project_list' %}">Все проекты</a>
+            </div>
+        </div>
+        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
+        <div class="project-description">
+            <p>{{ project.description|safe }}</p>
+        </div>
+        <div class="project-footer">
+            <ul class="project-links">
+                <li><a href="#">Link 1</a></li>
+                <li><a href="#">Link 2</a></li>
+                <li><a href="#">Link 3</a></li>
+            </ul>
+            <p class="date-created">{{ project.created_at|date:"d M Y" }}</p>
         </div>
     </div>
-    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
-    <div class="project-description">
-        <p>{{ project.description }}</p>
-    </div>
-    <div class="project-footer">
-        <ul class="project-links">
-            <li><a href="#">Link 1</a></li>
-            <li><a href="#">Link 2</a></li>
-            <li><a href="#">Link 3</a></li>
-        </ul>
-        <p class="date-created">{{ project.created_at }}</p>
+</div>
+
+<!-- Modal -->
+<div id="imageModal" class="modal">
+    <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <img id="modalContent" src="" alt="Увеличенное изображение">
     </div>
 </div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Функция для открытия модального окна с изображением
+    function openModal(imageSrc) {
+        var modal = document.getElementById("imageModal");
+        var modalContent = document.getElementById("modalContent");
+
+        // Устанавливаем изображение в модальное окно
+        modalContent.src = imageSrc;
+
+        // Отображаем модальное окно
+        modal.style.display = "flex"; // Используем flex для центрирования
+
+        // Плавно показываем модальное окно
+        setTimeout(function() {
+            modal.classList.add("show-modal");
+        }, 50); // Задержка для плавного появления
+    }
+
+    // Функция для закрытия модального окна
+    function closeModal() {
+        var modal = document.getElementById("imageModal");
+
+        // Плавно скрываем модальное окно
+        modal.classList.remove("show-modal");
+
+        // Задержка перед скрытием модального окна
+        setTimeout(function() {
+            modal.style.display = "none";
+        }, 100); // Длительность анимации должна соответствовать CSS
+    }
+
+    // Получаем все изображения внутри .project-description
+    var descriptionImages = document.querySelectorAll(".project-description img");
+
+    // Добавляем обработчик клика для каждого изображения
+    descriptionImages.forEach(function(img) {
+        img.onclick = function() {
+            openModal(this.src);
+        };
+    });
+
+    // Получаем элемент закрытия модального окна
+    var closeModalButton = document.getElementById("closeModal");
+
+    // Добавляем обработчик клика для закрытия модального окна
+    closeModalButton.onclick = function() {
+        closeModal();
+    };
+
+    // Закрываем модальное окно при клике вне изображения
+    var modal = document.getElementById("imageModal");
+    modal.onclick = function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
+</script>
+
+
+
 
 {% endblock %}

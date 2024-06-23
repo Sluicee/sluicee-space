@@ -10,6 +10,8 @@ body {
     padding: 0;
 }
 
+
+
 /* Scrollbar Styles */
 ::-webkit-scrollbar {
     height: 8px;
@@ -121,19 +123,18 @@ body {
 }
 
 /* Project List Styles */
-.project-list {
+.project-list-page .project-list {
     margin: 0 auto;
 }
 
-.projects-title {
+.project-list-page .projects-title {
     font-size: 36px;
     font-weight: 300;
     margin-bottom: 20px;
     text-align: center;
 }
 
-.project-grid {
-    grid-gap: 50px;
+.project-list-page .project-grid {
     display: grid;
     gap: 50px;
     grid-template-columns: repeat(auto-fit, minmax(500px, 700px));
@@ -141,151 +142,125 @@ body {
     padding: 50px 80px 80px;
 }
 
-.project-grid a {
-    color: #fff;
+.project-list-page .project-grid a {
+    color: white;
     text-decoration: none;
 }
 
-@media (max-width: 768px) {
-    .project-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.project-card {
+.project-list-page .project-card {
     border-radius: 8px;
     box-shadow: 0 4px 8px #0000001a;
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
     max-width: 700px;
+    height: 150px;
     padding: 10px;
-    position: relative;
     transition: box-shadow 0.3s ease;
 }
 
-.project-card:hover {
+.project-list-page .project-card:hover {
     box-shadow: 0 8px 16px #0003;
 }
 
-.project-image {
+.project-list-page .project-image {
     flex: 0 0 auto;
     margin-right: 20px;
-}
-
-.image {
+    width: 250px;
+    height: 150px;
     border-radius: 12px;
-    max-height: 150px;
-    width: 100%;
-    max-width: 250px;
     object-fit: cover;
     transition: transform 0.3s ease;
 }
 
-.image:hover {
+.project-list-page .project-image:hover {
     transform: scale(1.1);
 }
 
-.project-details {
+.project-list-page .project-details {
+    margin-left: 15px;
+    height: 150px;
+}
+
+.project-list-page .project-details a {
     margin-left: 15px;
 }
 
-.project-details h2 {
-    font-size: 28px;
+.project-list-page .project-details h2 {
+    font-size: 32px;
     font-weight: 600;
     margin: 0 0 10px;
 }
 
-.project-details p {
+.project-list-page .project-details p {
     color: #fff;
     font-size: 16px;
     margin: 0;
 }
 
-/* Project Page Styles */
+@media (max-width: 768px) {
+    .project-list-page .project-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
-.project-detail {
+/* Project Detail Page Styles */
+.project-detail-page .project-detail {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 150px; /* Отступ сверху */
+    padding-top: 150px;
     padding-bottom: 150px;
 }
 
-.project-cont {
-    padding-top: 0;
-}
-
-.project-header {
+.project-detail-page .project-header {
     text-align: center;
     margin-bottom: 40px;
 }
 
-.project-header h1 {
+.project-detail-page .project-header h1 {
     font-size: 36px;
     margin-bottom: 10px;
 }
 
-.back-link {
+.project-detail-page .back-link {
     margin-top: 20px;
 }
 
-.project-image {
-    max-width: 60%; /* Ширина изображения */
+.project-detail-page .project-image {
+    max-width: 60%;
     border-radius: 8px;
-    margin-top: 20px; /* Отступ сверху для изображения */
+    margin-top: 20px;
     max-height: 619px;
     object-fit: cover;
 }
 
-.project-description {
+.project-detail-page .project-description {
     text-align: start;
-    max-width: 50%; /* Ширина описания */
-    margin: 20px auto; /* Центрируем и добавляем отступы */
+    max-width: 50%;
+    margin: 20px auto;
 }
 
-.project-description p {
+.project-detail-page .project-description img {
+    max-width: 100%;
+    border-radius: 8px;
+    object-fit:scale-down;
+}
+
+.project-detail-page .project-description p {
     font-size: 24px;
     line-height: 1.6;
 }
 
-.project-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    width: 50%; /* Ширина блока с датой и ссылками */
-}
-
-.date-created {
-    font-style: italic;
-}
-
-.project-links {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.project-links li {
-    margin-right: 10px;
-}
-
-.project-links a,
-.back-link a {
+.project-description a {
     color: white;
     text-decoration: none;
-    font-size: 16px;
     position: relative;
     padding-bottom: 1px;
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.project-links a::after,
-.back-link a::after {
+.project-description a::after{
     content: '';
     position: absolute;
     left: 0;
@@ -297,26 +272,154 @@ body {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.project-links a:hover::after,
-.back-link a:hover::after {
+.project-description a:hover::after {
     background-color: rgba(255, 255, 255, 0.8);
     transform: scaleY(1);
 }
 
+.project-detail-page .project-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 50%;
+}
+
+.project-detail-page .date-created {
+    font-style: italic;
+}
+
+.project-detail-page .project-links {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.project-detail-page .project-links li {
+    margin-right: 10px;
+}
+
+.project-detail-page .project-links a,
+.project-detail-page .back-link a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+    padding-bottom: 1px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.project-detail-page .project-links a::after,
+.project-detail-page .back-link a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: scaleY(0.5);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.project-detail-page .project-links a:hover::after,
+.project-detail-page .back-link a:hover::after {
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: scaleY(1);
+}
+
+/* Existing CSS */
+
+/* Modal Styles */
+.modal {
+    display: none; /* Скрываем модальное окно по умолчанию */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
+    overflow: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Модальное окно */
+#imageModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: opacity 0.1s ease, transform 0.1s ease;
+}
+
+/* Контейнер с изображением */
+#modalContent {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    opacity: 0;
+}
+
+/* Показ модального окна */
+#imageModal.show-modal {
+    display: flex;
+}
+
+/* Анимация для изображения */
+#imageModal.show-modal #modalContent {
+    opacity: 1;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 700px) {
+    .modal-content {
+        width: 100%;
+    }
+}
+
+
 @media (max-width: 768px) {
-    .project-detail {
-        padding-top: 200px; /* Уменьшаем отступ сверху на мобильных устройствах */
+    .project-detail-page .project-detail {
+        padding-top: 200px;
     }
 
-    .project-image {
-        max-width: 90%; /* На мобильных устройствах изображение занимает всю ширину */
+    .project-detail-page .project-image {
+        max-width: 90%;
     }
 
-    .project-description {
-        max-width: 90%; /* Увеличиваем ширину описания на мобильных устройствах */
+    .project-detail-page .project-description {
+        max-width: 90%;
     }
 
-    .project-footer {
-        width: 90%; /* Увеличиваем ширину блока с датой и ссылками на мобильных устройствах */
+    .project-detail-page .project-footer {
+        width: 90%;
     }
 }
