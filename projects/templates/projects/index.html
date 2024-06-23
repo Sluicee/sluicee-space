@@ -1,0 +1,58 @@
+{% extends 'projects/base.html' %}
+{% load static %}
+
+{% block title %}Sluicee space{% endblock %}
+
+{% block content %}
+<header class="header">
+    <div class="header-content">
+        <img src="{% static 'images/sluicee.png' %}" alt="Profile" class="profile-image">
+        <h1>Sluicee</h1>
+        <p>Творческая личность без объекта творчества</p>
+        <div class="social-links">
+            <a href="https://github.com/sluicee" target="_blank" rel="noopener noreferrer">
+                <img src="{% static 'images/github.svg' %}" alt="github" class="social-img">
+            </a>
+            <a href="https://t.me/ImanaevMaksim" target="_blank" rel="noopener noreferrer">
+                <img src="{% static 'images/telegram.svg' %}" alt="telegram" class="social-img">
+            </a>
+            <a href="https://instagram.com/dystopianstvo" target="_blank" rel="noopener noreferrer">
+                <img src="{% static 'images/insta.svg' %}" alt="instagram" class="social-img">
+            </a>
+            <a href="https://twitch.tv/sluicee" target="_blank" rel="noopener noreferrer">
+                <img src="{% static 'images/twitch.svg' %}" alt="twitch" class="social-img">
+            </a>
+            <a href="mailto:contactsluicee@gmail.com" target="_blank" rel="noopener noreferrer">
+                <img src="{% static 'images/gmail.svg' %}" alt="gmail" class="social-img">
+            </a>
+        </div>
+        <div class="quick-links">
+            <a href="#project1" target="_blank" rel="noopener noreferrer">Галерея</a>
+            <p>/</p>
+            <a href="https://emotes.sluicee.space" target="_blank" rel="noopener noreferrer">Смайл-бот</a>
+            <p>/</p>
+            <a href="#project3" target="_blank" rel="noopener noreferrer">Проект 3</a>
+        </div>
+    </div>
+</header>
+<main>
+    <section id="projects" class="project-list">
+        <h2 class="projects-title">Projects</h2>
+        <div class="project-grid">
+            {% for project in projects %}
+                <a href="{% url 'project_detail' project.slug %}" target="_blank">
+                    <div class="project-card">
+                        {% if project.image %}
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}" class="image">
+                        {% endif %}
+                        <div class="project-details">
+                            <h2>{{ project.title }}</h2>
+                            <p>{{ project.description|truncatewords:30 }}</p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </section>    
+</main>
+{% endblock %}

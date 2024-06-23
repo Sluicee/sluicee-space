@@ -1,0 +1,26 @@
+{% extends 'projects/base.html' %}
+{% load static %}
+{% block title %}{{ project.title }}{% endblock %}
+{% block content %}
+<div class="project-detail">
+    <div class="project-header">
+        <h1>{{ project.title }}</h1>
+        <div class="back-link">
+            <a href="{% url 'project_list' %}">Все проекты</a>
+        </div>
+    </div>
+    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
+    <div class="project-description">
+        <p>{{ project.description }}</p>
+    </div>
+    <div class="project-footer">
+        <ul class="project-links">
+            <li><a href="#">Link 1</a></li>
+            <li><a href="#">Link 2</a></li>
+            <li><a href="#">Link 3</a></li>
+        </ul>
+        <p class="date-created">{{ project.created_at }}</p>
+    </div>
+</div>
+
+{% endblock %}
