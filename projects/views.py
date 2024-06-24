@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Project, Album, Photo
+from .models import Project
 
 def project_list(request):
     projects = Project.objects.order_by('-created_at')  # Сортировка по убыванию даты создания
@@ -18,8 +18,3 @@ def index(request):
         'projects': projects
     }
     return render(request, 'index.html', context)
-
-def photo_gallery(request):
-    albums = Album.objects.prefetch_related('photos').all()
-    photos = Photo.objects.all()
-    return render(request, 'gallery/gallery.html', {'albums': albums, 'photos': photos})

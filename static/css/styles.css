@@ -289,6 +289,7 @@ body, html {
     line-height: 1.6;
 }
 
+.photos-header a,
 .project-description a {
     color: white;
     text-decoration: none;
@@ -297,6 +298,7 @@ body, html {
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
+.photos-header a::after,
 .project-description a::after{
     content: '';
     position: absolute;
@@ -309,6 +311,7 @@ body, html {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+.photos-header a:hover::after,
 .project-description a:hover::after {
     background-color: rgba(255, 255, 255, 0.8);
     transform: scaleY(1);
@@ -529,10 +532,12 @@ body, html {
 }
 
 .photo-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    justify-content: center; /* Выравнивание по горизонтали */
+    gap: 50px;
+    margin: 0 auto; /* Центрирование контейнера по горизонтали */
+    padding: 20px;
 }
 
 .photo-card {

@@ -18,10 +18,11 @@
         </div>
         <div class="project-footer">
             <ul class="project-links">
-                <li><a href="#">Link 1</a></li>
-                <li><a href="#">Link 2</a></li>
-                <li><a href="#">Link 3</a></li>
-            </ul>
+                <p>Ссылки:</p>
+                {% for link in project.link.all %}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {% endfor %}
+            </ul>            
             <p class="date-created">{{ project.created_at|date:"d M Y" }}</p>
         </div>
     </div>

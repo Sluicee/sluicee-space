@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-t=$@czr679z+zsh=x!51$9alc%2_r%sh6-f)7p7qs=$(74p)6d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sluicee.space', 'www.sluicee.space', '127.0.0.1']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'projects',
+    'gallery',
     'ckeditor',
     'ckeditor_uploader',
 ]
@@ -82,7 +83,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
