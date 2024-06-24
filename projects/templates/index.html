@@ -1,4 +1,4 @@
-{% extends 'projects/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}Sluicee space{% endblock %}
@@ -27,7 +27,7 @@
             </a>
         </div>
         <div class="quick-links">
-            <a href="#project1" target="_blank" rel="noopener noreferrer">Галерея</a>
+            <a href="/gallery" target="_blank" rel="noopener noreferrer">Галерея</a>
             <p>/</p>
             <a href="https://emotes.sluicee.space" target="_blank" rel="noopener noreferrer">Смайл-бот</a>
             <p>/</p>
@@ -47,7 +47,7 @@
                         {% endif %}
                         <div class="project-details">
                             <h2>{{ project.title }}</h2>
-                            <p>{{ project.description|safe|striptags|truncatewords_html:28 }}</p>
+                            <p>{{ project.description|safe|striptags|truncatewords_html:19 }}</p>
                         </div>
                     </div>
                 </a>

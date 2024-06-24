@@ -8,6 +8,41 @@ body {
     font-family: 'TildaSans', sans-serif;
     margin: 0;
     padding: 0;
+    overflow: auto; /* Убедитесь, что overflow не установлен в hidden */
+}
+
+body, html {
+    overflow: auto;
+    height: auto; /* Убедитесь, что высота не ограничена */
+}
+
+
+.loading-placeholder {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-top: 75%; /* Соотношение сторон 4:3 */
+    border-radius: 50%; /* Круглый фон */
+}
+
+.loading-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    margin-top: -25px; /* Смещение спиннера на половину его высоты и ширины */
+    margin-left: -25px;
+    border-radius: 50%;
+    border: 3px solid rgba(0, 0, 0, 0.3);
+    border-top-color: #ffffff; /* Цвет верхней границы */
+    animation: spin 1s linear infinite; /* Анимация вращения */
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 
@@ -137,7 +172,7 @@ body {
 .project-list-page .project-grid {
     display: grid;
     gap: 50px;
-    grid-template-columns: repeat(auto-fit, minmax(500px, 700px));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 600px));
     justify-content: center;
     padding: 50px 80px 80px;
 }
@@ -153,7 +188,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    max-width: 700px;
+    max-width: 600px;
     height: 150px;
     padding: 10px;
     transition: box-shadow 0.3s ease;
@@ -165,7 +200,6 @@ body {
 
 .project-list-page .project-image {
     flex: 0 0 auto;
-    margin-right: 20px;
     width: 250px;
     height: 150px;
     border-radius: 12px;
@@ -180,6 +214,7 @@ body {
 .project-list-page .project-details {
     margin-left: 15px;
     height: 150px;
+    max-width: 350px;
 }
 
 .project-list-page .project-details a {
@@ -196,6 +231,8 @@ body {
     color: #fff;
     font-size: 16px;
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media (max-width: 768px) {
@@ -422,4 +459,165 @@ body {
     .project-detail-page .project-footer {
         width: 90%;
     }
+}
+
+/* Стили для галереи */
+.gallery {
+    text-align: center;
+    scroll-behavior: smooth; /* Плавный скролл */
+    padding-bottom: 100px;
+}
+
+.photos-header {
+    margin-left: 5%;
+    margin-top: 200px;
+    margin-bottom: 100px;
+    padding-left: 10px;
+}
+
+.album-list {
+    display: inline-block; /* Используем flexbox для горизонтального выравнивания */
+    gap: 10px; /* Промежуток между элементами */
+    margin-bottom: 20px;
+    max-width: 100%; /* Максимальная ширина блока */
+    overflow-x: auto; /* Включаем горизонтальную прокрутку */
+    overflow-y: hidden; /* Скрываем вертикальную прокрутку */
+    overscroll-behavior: smooth;
+    padding-bottom: 10px; /* Добавляем нижний внутренний отступ для корректного отображения полосы прокрутки */
+    white-space: nowrap; /* Запрещаем перенос элементов на новую строку */
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.album-button {
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: transform 0.3s, opacity 0.3s ease;
+    width: 300px;
+    height: 100px;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    margin-right: 25px;
+}
+
+.album-button:hover {
+    transform: scale(1.05);
+}
+
+.album-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease;
+}
+
+.album-text {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    font-size: 24px;
+    font-family: TildaSans;
+    font-weight: 100;
+}
+
+.photo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.photo-card {
+    width: 250px;
+    overflow: hidden;
+    transition: transform 0.3s, opacity 0.3s ease;
+}
+
+.photo-image {
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+    display: none;
+}
+
+.photo-card:hover {
+    transform: scale(1.05);
+}
+
+.photo-desc {
+    padding: 10px;
+    text-align: left;
+}
+
+.photo-desc p {
+    margin: 5px 0;
+}
+
+.photo-desc {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.album-card p, .photo-card p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.album-photos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Стили для модального окна */
+.modal {
+    display: none; /* Скрываем модальное окно по умолчанию */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
+    overflow: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.modal-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#modal-image {
+    max-width: 90%;
+    max-height: 100vh;
+    object-fit: contain; /* Обеспечивает сохранение пропорций и полное отображение изображения */
+}
+
+.modal-close {
+    color: #fff;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #ccc;
 }

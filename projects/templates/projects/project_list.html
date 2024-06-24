@@ -1,4 +1,4 @@
-{% extends 'projects/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}Projects List{% endblock %}
@@ -6,23 +6,24 @@
 {% block content %}
 
 <body class="project-list-page">
-    <section id="projects" class="project-list">
+    <section id="projects" class="project-list-page">
         <h2 class="projects-title">Projects</h2>
         <div class="project-grid">
             {% for project in projects %}
-                <div class="project-card">
-                    {% if project.image %}
-                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
-                    {% endif %}
-                    <div class="project-details">
-                        <h2>{{ project.title }}</h2>
-                        <p>{{ project.description|truncatewords:20|safe }}</p>
-                        <a href="{% url 'project_detail' slug=project.slug %}" class="btn btn-primary" target="_blank">View Project</a>
+                <a href="{% url 'project_detail' project.slug %}" target="_blank">
+                    <div class="project-card">
+                        {% if project.image %}
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
+                        {% endif %}
+                        <div class="project-details">
+                            <h2>{{ project.title }}</h2>
+                            <p>{{ project.description|safe|striptags|truncatewords:20 }}</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             {% endfor %}
         </div>
-    </section>
+    </section>  
 </body>
 </html>
 
