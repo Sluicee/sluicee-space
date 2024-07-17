@@ -239,6 +239,9 @@ body, html {
     .project-list-page .project-grid {
         grid-template-columns: 1fr;
     }
+    .project-list-page .project-card {
+        flex-direction: column;
+    }
 }
 
 /* Project Detail Page Styles */
@@ -273,20 +276,35 @@ body, html {
 }
 
 .project-detail-page .project-description {
-    text-align: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрирование элементов по горизонтали */
     max-width: 50%;
     margin: 20px auto;
 }
 
 .project-detail-page .project-description img {
+    align-self: center; /* Центрирование изображения */
+    margin: 0 auto; /* Отступы сверху и снизу */
+    display: block; /* Убедитесь, что изображение отображается как блочный элемент */
     max-width: 100%;
     border-radius: 8px;
-    object-fit:scale-down;
+    object-fit: scale-down;
+}
+
+.project-detail-page .project-description h5 {
+    align-self: center; /* Центрирование заголовка */
+    text-align: center; /* Центрирование текста внутри заголовка */
+    font-style: italic;
+    margin: 0 auto;
 }
 
 .project-detail-page .project-description p {
     font-size: 24px;
     line-height: 1.6;
+    text-align: start; /* Выровнять текст абзаца по левому краю */
+    align-self: flex-start; /* Выравнивание по левому краю */
+    width: 100%; /* Чтобы занять всю ширину родительского элемента */
 }
 
 .photos-header a,
