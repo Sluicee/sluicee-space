@@ -242,6 +242,15 @@ body, html {
     .project-list-page .project-card {
         flex-direction: column;
     }
+    .project-list-page .project-details {
+        margin-left: 0;
+        margin-top: 15px;
+        height: 150px;
+        max-width: 350px;
+    }
+    .project-list-page {
+        padding-bottom: 100px;
+    }
 }
 
 /* Project Detail Page Styles */

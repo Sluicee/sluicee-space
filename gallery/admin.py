@@ -11,4 +11,5 @@ admin.site.register(Camera)
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ('title', 'description', 'image', 'uploaded_at', 'album', 'camera')
     list_filter = ('album', 'camera')
+    readonly_fields = ('thumbnail',)
 

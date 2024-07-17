@@ -26,7 +26,7 @@
         {% for photo in photos %}
             <div class="photo-card" data-album="{% if photo.album %}{{ photo.album.id }}{% else %}no-album{% endif %}">
                 <div class="loading-placeholder"></div>
-                <img id="photo-{{ photo.id }}" data-src="{{ photo.image.url }}" alt="{{ photo.title }}" class="photo-image lazyload">
+                <img id="photo-{{ photo.id }}" data-src="{{ photo.thumbnail.url }}" alt="{{ photo.title }}" class="photo-image lazyload" data-full="{{ photo.image.url }}">
                 <div class="photo-desc">
                     <p>{{ photo.description }}</p>
                     {% if photo.camera %}
@@ -163,7 +163,7 @@
 
         lazyImages.forEach(image => {
             image.addEventListener("click", function() {
-                modalImage.src = this.src;
+                modalImage.src = image.getAttribute('data-full');
                 modal.style.display = "flex"; // Используем flex для центрирования
             });
         });
