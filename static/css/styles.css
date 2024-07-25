@@ -235,23 +235,36 @@ body, html {
     text-overflow: ellipsis;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .project-list-page .project-grid {
-        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 0;
     }
+
     .project-list-page .project-card {
         flex-direction: column;
+        align-items: center;
+        height: auto;
     }
+
+    .project-list-page .project-image {
+        margin-bottom: 15px;
+        width: 250px; /* Сохраняем исходную ширину */
+        height: 150px; /* Сохраняем исходную высоту */
+    }
+
     .project-list-page .project-details {
         margin-left: 0;
-        margin-top: 15px;
-        height: 150px;
-        max-width: 350px;
+        width: 100%;
+        max-width: 250px; /* Сохраняем ширину в размере изображения */
     }
-    .project-list-page {
-        padding-bottom: 100px;
+
+    .project-list-page .project-details h2 {
+        font-size: medium;
     }
 }
+
+
 
 /* Project Detail Page Styles */
 .project-detail-page .project-detail {
