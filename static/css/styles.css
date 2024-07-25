@@ -4,8 +4,11 @@ body {
     animation-fill-mode: forwards;
     animation-iteration-count: 1;
     background-color: #000;
+    background-image: url(../images/bg.png);
+    background-repeat: repeat;
+    background-position: 50px 50px; /* Смещение фонового изображения */
     color: #fff;
-    font-family: 'TildaSans', sans-serif;
+    font-family: 'XPtahoma', sans-serif;
     margin: 0;
     padding: 0;
     overflow: auto; /* Убедитесь, что overflow не установлен в hidden */
@@ -51,9 +54,11 @@ body, html {
 ::-webkit-scrollbar {
     height: 8px;
     width: 8px;
+    background-color: #ff007b46;
+
 }
 ::-webkit-scrollbar-thumb {
-    background-color: #666;
+    background-color: #FF007A;
     border-radius: 4px;
 }
 ::-webkit-scrollbar-track {
@@ -71,6 +76,13 @@ body, html {
     src: url('../fonts/TildaSans-VF.woff2') format('woff2'),
          url('../fonts/TildaSans-VF.woff') format('woff'),
          url('../fonts/TildaSans-VF.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'XPtahoma';
+    src: url('../fonts/windows-xp-tahoma.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -183,7 +195,9 @@ body, html {
 }
 
 .project-list-page .project-card {
-    border-radius: 8px;
+    border: 2px solid #FF007A; /* Обводка */
+    background-color: rgba(255, 0, 122, 0.3); /* Полупрозрачный фон */
+    border-radius: 0; /* Убираем закругления */
     box-shadow: 0 4px 8px #0000001a;
     display: flex;
     justify-content: space-between;
@@ -191,24 +205,20 @@ body, html {
     max-width: 600px;
     height: 150px;
     padding: 10px;
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Переход для увеличения */
 }
 
 .project-list-page .project-card:hover {
     box-shadow: 0 8px 16px #0003;
+    transform: scale(1.05); /* Увеличение карточки */
 }
 
 .project-list-page .project-image {
     flex: 0 0 auto;
     width: 250px;
     height: 150px;
-    border-radius: 12px;
+    border-radius: 0; /* Убираем закругления */
     object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.project-list-page .project-image:hover {
-    transform: scale(1.1);
 }
 
 .project-list-page .project-details {
@@ -223,7 +233,7 @@ body, html {
 
 .project-list-page .project-details h2 {
     font-size: 32px;
-    font-weight: 600;
+    font-weight: 400; /* Уменьшаем толщину шрифта */
     margin: 0 0 10px;
 }
 
@@ -261,9 +271,9 @@ body, html {
 
     .project-list-page .project-details h2 {
         font-size: medium;
+        font-weight: 400; /* Уменьшаем толщину шрифта для мобильной версии */
     }
 }
-
 
 
 /* Project Detail Page Styles */
@@ -303,6 +313,9 @@ body, html {
     align-items: center; /* Центрирование элементов по горизонтали */
     max-width: 50%;
     margin: 20px auto;
+    background-color: #00000040;
+    padding: 20px;
+    border-radius: 15px;
 }
 
 .project-detail-page .project-description img {
