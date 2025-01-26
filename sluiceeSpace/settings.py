@@ -131,17 +131,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+# URL для доступа к статическим файлам
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    '/var/www/static/',
-]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# Папка на сервере, куда будут собираться все статические файлы
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Директории для поиска статических файлов
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Убедитесь, что эта папка существует
+]
+
+# URL для медиафайлов
 MEDIA_URL = '/upload_media/'
+
+# Папка для медиафайлов
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload_media')
 
+# Путь для загрузки файлов через CKEditor
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
 
 
 # Default primary key field type
