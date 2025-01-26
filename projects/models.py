@@ -12,6 +12,8 @@ class Project(models.Model):
             self.slug = slugify(unidecode(self.title))
         super().save(*args, **kwargs)
 
+    title_link = models.TextField(blank=True)
+
     description = RichTextUploadingField(blank=True)
     image = models.ImageField(upload_to='projects/')
     link = models.ManyToManyField('Link', related_name='projects', blank=True)

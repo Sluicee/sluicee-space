@@ -26,13 +26,6 @@
                 <img src="{% static 'images/gmail.svg' %}" alt="gmail" class="social-img">
             </a>
         </div>
-        <div class="quick-links">
-            <a href="/gallery" target="_blank" rel="noopener noreferrer">Галерея</a>
-            <p>/</p>
-            <a href="https://emotes.sluicee.space" target="_blank" rel="noopener noreferrer">Смайл-бот</a>
-            <p>/</p>
-            <a href="#project3" target="_blank" rel="noopener noreferrer">Проект 3</a>
-        </div>
     </div>
 </header>
 <main>
@@ -40,7 +33,7 @@
         <h2 class="projects-title">Projects</h2>
         <div class="project-grid">
             {% for project in projects %}
-                <a href="{% url 'project_detail' project.slug %}" target="_blank">
+                <a href="{{ project.title_link }}" target="_blank">
                     <div class="project-card">
                         {% if project.image %}
                             <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
