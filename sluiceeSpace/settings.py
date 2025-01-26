@@ -149,7 +149,7 @@ MEDIA_URL = '/upload_media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload_media')
 
 # Путь для загрузки файлов через CKEditor
-CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_UPLOAD_PATH = "upload_media/uploads/"
 
 
 
