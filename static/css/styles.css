@@ -679,3 +679,64 @@ body, html {
 .modal-close:hover {
     color: #ccc;
 }
+
+/* Стиль контейнера ошибки */
+.error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Полный экран */
+    color: white;
+    font-family: 'XPtahoma', sans-serif;
+    text-align: center;
+    padding: 0 20px;
+}
+
+/* Заголовок ошибки */
+.error-container h1 {
+    font-size: 72px;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+/* Текст ошибки */
+.error-container p {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Ссылка для возвращения на главную */
+.error-container a {
+    font-size: 18px;
+    color: #FF007A;
+    text-decoration: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    padding-bottom: 2px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Эффект при наведении на ссылку */
+.error-container a:hover {
+    color: rgba(97, 218, 251, 0.8);
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Фоновое изображение и анимация для страницы */
+.error-page {
+    animation: fadeInAnimation 3s ease;
+    animation-fill-mode: forwards;
+    background-color: #000;
+    background-image: url('../images/error-bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Анимация плавного появления */
+@keyframes fadeInAnimation {
+    0% { opacity: 0; }
+    to { opacity: 1; }
+}
