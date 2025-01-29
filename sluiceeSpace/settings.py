@@ -30,6 +30,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['sluicee.ru', 'www.sluicee.ru', 'sluicee.space', 'www.sluicee.space', '127.0.0.1', '192.168.0.11']
 
+APPEND_SLASH = True
 
 # Application definition
 
