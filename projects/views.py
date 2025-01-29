@@ -19,22 +19,22 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
-def page_not_found(request, exception):
+def page_not_found(request, exception=None):
     if not request.path.endswith('/'):
         return redirect(request.path + '/', permanent=True)
     return render(request, '404.html', status=404)
 
-def server_error(request):
+def server_error(request, exception=None):
     if not request.path.endswith('/'):
         return redirect(request.path + '/', permanent=True)
     return render(request, '500.html', status=500)
 
-def permission_denied(request, exception):
+def permission_denied(request, exception=None):
     if not request.path.endswith('/'):
         return redirect(request.path + '/', permanent=True)
     return render(request, '403.html', status=403)
 
-def bad_request(request, exception):
+def bad_request(request, exception=None):
     if not request.path.endswith('/'):
         return redirect(request.path + '/', permanent=True)
     return render(request, '400.html', status=400)
