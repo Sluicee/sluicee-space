@@ -13,6 +13,7 @@ class Project(models.Model):
         super().save(*args, **kwargs)
 
     title_link = models.TextField(blank=True)
+    hidden = models.BooleanField(default=False)
 
     description = RichTextUploadingField(blank=True)
     image = models.ImageField(upload_to='projects/')
