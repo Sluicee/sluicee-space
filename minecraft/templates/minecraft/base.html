@@ -287,12 +287,18 @@
             serverCards.forEach(card => {
                 const serverId = card.dataset.serverId;
                 if (serverId) {
-                    fetch(`/api/servers/${serverId}/status/`)
-                        .then(response => response.json())
+                    fetch(`/servers/api/${serverId}/status/`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
                         .then(data => {
+                            console.log('Status data for server', serverId, data);
                             const statusElement = card.querySelector('.status');
                             const playersElement = card.querySelector('.players-info');
-                            
+
                             if (data.online) {
                                 statusElement.textContent = 'Online';
                                 statusElement.className = 'status online';

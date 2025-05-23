@@ -3,12 +3,12 @@ from .models import MinecraftServer
 from .models import AccessCode
 
 class MinecraftServerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'ip', 'port', 'version', 'status', 'max_players')
+    list_display = ('name', 'address', 'version', 'status', 'max_players')
     list_filter = ('status', 'version')
-    search_fields = ('name', 'ip')
+    search_fields = ('name', 'address')
     fieldsets = (
         ('Основная информация', {
-            'fields': ('name', 'ip', 'port', 'version', 'status', 'max_players')
+            'fields': ('name', 'address', 'version', 'status', 'max_players')
         }),
         ('Моды', {
             'fields': ('required_mods', 'optional_mods'),

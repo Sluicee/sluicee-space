@@ -10,7 +10,7 @@
 
 <div class="server-grid">
     {% for server in servers %}
-    <div class="server-card" data-server-id="{{ forloop.counter }}">
+    <div class="server-card" data-server-id="{{ server.id }}">
         <div class="server-header">
             <div class="server-name">{{ server.name }}</div>
             <span class="status {{ server.status }}">{{ server.status }}</span>
@@ -19,11 +19,7 @@
         <div class="server-info">
             <div class="info-row">
                 <span class="info-label">IP адрес:</span>
-                <span class="info-value">{{ server.ip }}</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Порт:</span>
-                <span class="info-value">{{ server.port }}</span>
+                <span class="info-value">{{ server.address }}</span>
             </div>
             <div class="info-row">
                 <span class="info-label">Версия:</span>
@@ -56,10 +52,6 @@
             </ul>
         </div>
         {% endif %}
-        
-        <div class="server-actions">
-            <button class="btn btn-primary" onclick="copyServerIP('{{ server.ip }}:{{ server.port }}')">Копировать IP</button>
-        </div>
     </div>
     {% endfor %}
 </div>
@@ -71,11 +63,6 @@ function copyServerIP(ip) {
     }).catch(function(err) {
         console.error('Не удалось скопировать: ', err);
     });
-}
-
-function connectToServer(ip) {
-    // Можно добавить инструкции по подключению
-    alert('Для подключения к серверу:\n1. Откройте Minecraft\n2. Выберите "Multiplayer"\n3. Добавьте сервер с IP: ' + ip);
 }
 </script>
 {% endblock %}

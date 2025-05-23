@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['mc.sluicee.ru', '.sluicee.ru', 'sluicee.ru', 'www.sluicee.ru', 'sluicee.space', 'www.sluicee.space', '127.0.0.1', 'localhost', 'servers.localhost', 'mc.localhost', '.localhost',]
 
@@ -58,7 +58,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'minecraft.middleware.MinecraftSubdomainMiddleware',
-   # 'minecraft.middleware.AccessCodeMiddleware',
 ]
 
 ROOT_URLCONF = 'sluiceeSpace.urls'
@@ -173,19 +172,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
     'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
         'file': {
-            'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': 'logs/django_errors.log',
+            'filename': 'debug.log',
         },
     },
     'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
+        'minecraft': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
         },
     },
 }

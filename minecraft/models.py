@@ -8,8 +8,7 @@ class MinecraftServer(models.Model):
     ]
 
     name = models.CharField(max_length=100, verbose_name='Название сервера')
-    ip = models.CharField(max_length=100, verbose_name='IP адрес')
-    port = models.IntegerField(default=25565, verbose_name='Порт')
+    address  = models.CharField(max_length=100, verbose_name='IP адрес', null=True, blank=True)
     version = models.CharField(max_length=20, verbose_name='Версия Minecraft')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='online', verbose_name='Статус')
     max_players = models.IntegerField(default=20, verbose_name='Максимальное количество игроков')
@@ -19,6 +18,9 @@ class MinecraftServer(models.Model):
                                     help_text='Формат: Название мода|URL (каждый мод с новой строки)')
     optional_mods = models.TextField(verbose_name='Необязательные моды (каждый с новой строки)', blank=True,
                                     help_text='Формат: Название мода|URL (каждый мод с новой строки)')
+    
+    enable_query = models.BooleanField(default=False, verbose_name='Включить Query')
+    favicon = models.ImageField(upload_to='servers/favicons/', null=True, blank=True)
 
     def __str__(self):
         return self.name

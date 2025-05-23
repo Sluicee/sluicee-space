@@ -4,6 +4,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import AccessCode
 from django.urls import reverse
+from mcstatus import JavaServer
+from .models import MinecraftServer
+import base64
+import traceback
 
 def minecraft_servers_list(request):
     """Главная страница поддомена с серверами"""
@@ -12,9 +16,9 @@ def minecraft_servers_list(request):
     servers = []
     for server in servers_db:
         servers.append({
+            'id': server.id,
             'name': server.name,
-            'ip': server.ip,
-            'port': server.port,
+            'address': server.address,
             'version': server.version,
             'players': f'0/{server.max_players}',  # Начальное значение, будет обновлено через API
             'status': server.status,
@@ -28,31 +32,41 @@ def minecraft_servers_list(request):
     })
 
 def server_status_api(request, server_id):
-    """API для получения статуса сервера"""
-        # Проверяем либо авторизацию, либо код доступа
     if not request.user.is_authenticated and 'access_code_valid' not in request.session:
         return JsonResponse({'error': 'Access denied'}, status=403)
-    
+
     try:
         server = MinecraftServer.objects.get(pk=server_id)
-        # Здесь можно подключиться к серверу и получить реальный статус
+        address = server.address  # Тут важный момент: убедись, что это поле заполнено корректно
+
+        mc_server = JavaServer.lookup(address)
+        status = mc_server.status()
+
+        icon = status.icon
+        icon_base64 = icon.split(',')[1] if icon else None
+
         status_data = {
             'server_id': server_id,
-            'online': server.status == 'online',
+            'online': True,
             'players': {
-                'online': 15,  # Здесь должно быть реальное значение
-                'max': server.max_players,
-                'list': ['Player1', 'Player2', 'Player3']  # Здесь должен быть реальный список
+                'online': status.players.online,
+                'max': status.players.max,
+                'list': [player.name for player in (status.players.sample or [])]
             },
-            'version': server.version,
-            'motd': 'Добро пожаловать на наш сервер!',
-            'ping': 45
+            'version': status.version.name,
+            'motd': status.description.get('text') if isinstance(status.description, dict) else status.description,
+            'ping': status.latency,
+            'icon': icon_base64
         }
+
     except MinecraftServer.DoesNotExist:
-        status_data = {
-            'error': 'Server not found'
-        }
-    
+        return JsonResponse({'error': 'Server not found'}, status=404)
+    except Exception as e:
+        # Логируем полную трассировку ошибки в консоль сервера
+        print(f"Error fetching server status for server_id={server_id}: {e}")
+        traceback.print_exc()
+        return JsonResponse({'error': f'Could not connect to server: {str(e)}'}, status=502)
+
     return JsonResponse(status_data)
 
 def enter_access_code(request):
