@@ -1,0 +1,81 @@
+{% extends 'minecraft/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>🎮 Minecraft Servers</h1>
+    <p>Выберите сервер для игры и присоединяйтесь к нашему сообществу!</p>
+</div>
+
+<div class="server-grid">
+    {% for server in servers %}
+    <div class="server-card" data-server-id="{{ forloop.counter }}">
+        <div class="server-header">
+            <div class="server-name">{{ server.name }}</div>
+            <span class="status {{ server.status }}">{{ server.status }}</span>
+        </div>
+        
+        <div class="server-info">
+            <div class="info-row">
+                <span class="info-label">IP адрес:</span>
+                <span class="info-value">{{ server.ip }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Порт:</span>
+                <span class="info-value">{{ server.port }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Версия:</span>
+                <span class="info-value">{{ server.version }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Игроки:</span>
+                <span class="info-value players-info">{{ server.players }}</span>
+            </div>
+        </div>
+
+        {% if server.required_mods %}
+        <div class="mods-section">
+            <h4>Обязательные моды:</h4>
+            <ul class="mods-list">
+                {% for mod in server.required_mods %}
+                <li><a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if server.optional_mods %}
+        <div class="mods-section">
+            <h4>Необязательные моды:</h4>
+            <ul class="mods-list">
+                {% for mod in server.optional_mods %}
+                <li><a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
+        <div class="server-actions">
+            <button class="btn btn-primary" onclick="copyServerIP('{{ server.ip }}:{{ server.port }}')">Копировать IP</button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+function copyServerIP(ip) {
+    navigator.clipboard.writeText(ip).then(function() {
+        alert('IP адрес скопирован: ' + ip);
+    }).catch(function(err) {
+        console.error('Не удалось скопировать: ', err);
+    });
+}
+
+function connectToServer(ip) {
+    // Можно добавить инструкции по подключению
+    alert('Для подключения к серверу:\n1. Откройте Minecraft\n2. Выберите "Multiplayer"\n3. Добавьте сервер с IP: ' + ip);
+}
+</script>
+{% endblock %}

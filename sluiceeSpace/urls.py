@@ -19,12 +19,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from minecraft import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('projects.urls')),
     path('', include('gallery.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+        # URL для поддомена серверов
+    path('auth/', views.enter_access_code, name='enter_access_code'),  # Страница ввода кода
+    path('servers/', views.minecraft_servers_list, name='servers_list'),  # Защищенный список
+    path('servers/api/<int:server_id>/status/', views.server_status_api, name='server_status'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

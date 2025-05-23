@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from django.contrib.messages import constants as messages
 
 load_dotenv()
 
@@ -28,7 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['sluicee.ru', 'www.sluicee.ru', 'sluicee.space', 'www.sluicee.space', '127.0.0.1', '192.168.0.11']
+ALLOWED_HOSTS = ['mc.sluicee.ru', '.sluicee.ru', 'sluicee.ru', 'www.sluicee.ru', 'sluicee.space', 'www.sluicee.space', '127.0.0.1', 'localhost', 'servers.localhost', 'mc.localhost', '.localhost',]
 
 APPEND_SLASH = True
 
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'gallery',
     'ckeditor',
     'ckeditor_uploader',
+    'minecraft',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +57,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'minecraft.middleware.MinecraftSubdomainMiddleware',
+   # 'minecraft.middleware.AccessCodeMiddleware',
 ]
 
 ROOT_URLCONF = 'sluiceeSpace.urls'
@@ -77,26 +81,33 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sluiceeSpace.wsgi.application'
 
+MESSAGE_TAGS = {
+    messages.ERROR: 'error',
+}
+
+SESSION_COOKIE_NAME = 'mc_server_access'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Сессия сохраняется после закрытия браузера
+SESSION_COOKIE_AGE = 30 * 24 * 60 * 60  # 30 дней в секундах
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE'),
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.getenv('DB_ENGINE'),
+#         'NAME': os.getenv('DB_NAME'),
+#         'USER': os.getenv('DB_USER'),
+#         'PASSWORD': os.getenv('DB_PASSWORD'),
+#         'HOST': os.getenv('DB_HOST'),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
