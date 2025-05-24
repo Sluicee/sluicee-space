@@ -65,7 +65,19 @@ def server_status_api(request, server_id):
         # Логируем полную трассировку ошибки в консоль сервера
         print(f"Error fetching server status for server_id={server_id}: {e}")
         traceback.print_exc()
-        return JsonResponse({'error': f'Could not connect to server: {str(e)}'}, status=502)
+        return JsonResponse({
+            'server_id': server_id,
+            'online': False,
+            'players': {
+                'online': 0,
+                'max': 0,
+                'list': []
+            },
+            'version': '',
+            'motd': 'Server offline',
+            'ping': None,
+            'icon': None
+        }, status=200)
 
     return JsonResponse(status_data)
 
