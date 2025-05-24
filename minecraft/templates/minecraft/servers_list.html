@@ -4,59 +4,85 @@
 
 {% block content %}
 <div class="header">
-    <h1>🎮 Minecraft Servers</h1>
-    <p>Выберите сервер для игры и присоединяйтесь к нашему сообществу!</p>
+    <h1>minecraft</h1>
 </div>
 
 <div class="server-grid">
     {% for server in servers %}
     <div class="server-card" data-server-id="{{ server.id }}">
         <div class="server-header">
-            <div class="server-name">{{ server.name }}</div>
-            <span class="status {{ server.status }}">{{ server.status }}</span>
+            <div class="server-name-wrapper">
+                <div class="server-name">{{ server.name }}</div>
+            </div>
+            <img class="server-icon" src="/static/images/logo192.png" alt="Иконка сервера" />
         </div>
         
-        <div class="server-info">
-            <div class="info-row">
-                <span class="info-label">IP адрес:</span>
-                <span class="info-value">{{ server.address }}</span>
+        <div class="server-content">
+            <div class="server-info">
+                <div class="info-row">
+                    <span class="info-label">ip</span>
+                    <span class="info-value">{{ server.address }}</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">version</span>
+                    <span class="info-value version-value">{{ server.version }}</span>
+                </div>
+                
+                {% if server.required_mods %}
+                <div class="mods-section info-row">
+                    <span class="info-label" >required</span>
+                    <div class="mods-list info-value">
+                        {% for mod in server.required_mods %}
+                        <div>- <a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if server.optional_mods %}
+                <div class="mods-section info-row">
+                    <span class="info-label">optional mods</span>
+                    <ul class="mods-list info-value">
+                        {% for mod in server.optional_mods %}
+                        <li><a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
             </div>
-            <div class="info-row">
-                <span class="info-label">Версия:</span>
-                <span class="info-value">{{ server.version }}</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Игроки:</span>
-                <span class="info-value players-info">{{ server.players }}</span>
+            <div class="status-section">
+                <div class="players">
+                    <span class="info-label">players</span>
+                    <span class="info-value players-info">{{ server.players }}</span>
+                    <div class="players-tooltip">
+                        {% if server.players.list and server.players.list.length > 0 %}
+                            <div class="players-list">
+                                {% for player in server.players.list %}
+                                    <span>{{ player }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="players-list">No players online</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <span class="status {{ server.status }}">{{ server.status }}</span>
             </div>
         </div>
 
-        {% if server.required_mods %}
-        <div class="mods-section">
-            <h4>Обязательные моды:</h4>
-            <ul class="mods-list">
-                {% for mod in server.required_mods %}
-                <li><a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
-        {% if server.optional_mods %}
-        <div class="mods-section">
-            <h4>Необязательные моды:</h4>
-            <ul class="mods-list">
-                {% for mod in server.optional_mods %}
-                <li><a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
     </div>
     {% endfor %}
 </div>
 
 <script>
+const iconElement = card.querySelector('.server-icon');
+if (server.icon && iconElement) {
+    iconElement.src = 'data:image/png;base64,' + server.icon;
+}
+
+
 function copyServerIP(ip) {
     navigator.clipboard.writeText(ip).then(function() {
         alert('IP адрес скопирован: ' + ip);
