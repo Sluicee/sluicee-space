@@ -1,9 +1,10 @@
 {% extends 'minecraft/base.html' %}
 
+{% block bodyclass %}enter-code-page{% endblock %}
+
 {% block content %}
 <div class="header">
-    <h1>🔒 Доступ к серверам</h1>
-    <p>Введите код доступа для просмотра списка серверов</p>
+    <h1>nuzhno proverit chto vi svoi</h1>
 </div>
 
 <div class="access-code-form">
@@ -11,9 +12,9 @@
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ next_url }}">
         <div class="form-group">
-            <input type="text" name="code" class="form-control" placeholder="Введите код доступа" required>
+            <input type="text" name="code" class="form-control" placeholder="vash code" required>
         </div>
-        <button type="submit" class="btn btn-primary">Продолжить</button>
+        <button type="submit" class="btn btn-primary">enter</button>
     </form>
 </div>
 

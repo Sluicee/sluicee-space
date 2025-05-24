@@ -261,9 +261,117 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        /* Специфичный градиент для этой страницы */
+        body.enter-code-page {
+            background-image: conic-gradient(from 180deg, #99B1FF, #000000);
+        }
+
+        /* Контейнер формы */
+        .access-code-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 200px);
+            padding: 20px;
+        }
+
+        /* Стили формы */
+        .access-code-form form {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(153, 160, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Inria Serif', serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #99B1FF;
+            box-shadow: 0 0 0 2px rgba(255, 153, 182, 0.3);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #6c7cb3, #99B1FF);
+            border: none;
+            border-radius: 8px;
+            color: #3B0000;
+            font-family: 'Inria Serif', serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;    
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #6276b9, #7595ff);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 111, 255, 0.3);
+        }
+
+        /* Сообщения */
+        .messages {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .alert {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #99B1FF;
+            color: white;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .access-code-form {
+                min-height: calc(100vh - 150px);
+            }
+            
+            .access-code-form form {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
-<body>
+<body class="{% block bodyclass %}{% endblock %}">
     <div class="container">
         {% block content %}
         {% endblock %}
