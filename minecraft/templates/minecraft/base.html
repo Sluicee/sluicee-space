@@ -369,6 +369,32 @@
                 padding: 20px;
             }
         }
+
+        /* Стиль для IP-адреса */
+        .ip-address {
+            cursor: pointer;
+        }
+
+        /* Стиль для всплывающего уведомления */
+        .copy-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .copy-notification.show {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="{% block bodyclass %}{% endblock %}">

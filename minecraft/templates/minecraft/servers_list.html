@@ -19,7 +19,7 @@
             <div class="server-info">
                 <div class="info-row">
                     <span class="info-label">ip</span>
-                    <span class="info-value">{{ server.address }}</span>
+                    <span class="info-value ip-address" onclick="copyServerIP('{{ server.address }}')">{{ server.address }}</span>
                 </div>
 
                 <div class="info-row">
@@ -43,7 +43,7 @@
                     <span class="info-label">optional mods</span>
                     <div class="mods-list info-value">
                         {% for mod in server.optional_mods %}
-                        <div><a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></div>
+                        <div>- <a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></div>
                         {% endfor %}
                     </div>
                 </div>
@@ -74,6 +74,8 @@
     {% endfor %}
 </div>
 
+<div class="copy-notification" id="copyNotification">copied.</div>
+
 <script>
 const iconElement = card.querySelector('.server-icon');
 if (server.icon && iconElement) {
@@ -83,9 +85,24 @@ if (server.icon && iconElement) {
 
 function copyServerIP(ip) {
     navigator.clipboard.writeText(ip).then(function() {
-        alert('IP адрес скопирован: ' + ip);
+        const notification = document.getElementById('copyNotification');
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 1000);
     }).catch(function(err) {
         console.error('Не удалось скопировать: ', err);
+        const notification = document.getElementById('copyNotification');
+        notification.textContent = 'Copy failed!';
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.textContent = 'copied.';
+            }, 300);
+        }, 1000);
     });
 }
 </script>
