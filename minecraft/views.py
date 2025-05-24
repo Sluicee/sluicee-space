@@ -83,7 +83,7 @@ def enter_access_code(request):
             request.session['access_code_valid'] = True
             return redirect(next_url)
         except AccessCode.DoesNotExist:
-            messages.error(request, 'Неверный или неактивный код доступа')
+            messages.error(request, 'wrong code')
     
     return render(request, 'minecraft/enter_code.html', {
         'next_url': next_url
