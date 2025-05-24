@@ -62,15 +62,22 @@
         }
 
         /* Сетка серверов */
+        .server-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 24px);
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
         .server-grid {
             display: grid;
-            grid-template-columns: repeat(2, 250px); /* Фиксировано 2 колонки */
-            gap: 90px; /* Увеличенный gap */
-            justify-content: center;
-            align-content: center; /* Центрирование по вертикали */
-            min-height: calc(100vh - 100px - 24px); /* Высота минус заголовок */
-            margin: 0 auto;
-            padding: 30px 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            max-width: 900px;
+            gap: 60px;
+            justify-items: center;      /* Центрирование карточек внутри колонок */
+            justify-content: center;    /* Центрирует саму сетку, если колонок меньше */
         }
 
         /* Карточка сервера */
@@ -79,7 +86,8 @@
             height: 300px;
             background: 
                 radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 1px, transparent 1px),
-                linear-gradient(to bottom, #FFD0EE, #FF99B6);
+                linear-gradient(to bottom, #FFD0EE, #ff99b6a9);
+            backdrop-filter: blur(10px);
             background-size: 20px 20px, 100% 100%;
             border-radius: 12px;
             padding: 20px;

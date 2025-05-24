@@ -5,73 +5,75 @@
     <h1>minecraft</h1>
 </div>
 
-<div class="server-grid">
-    {% for server in servers %}
-    <div class="server-card" data-server-id="{{ server.id }}">
-        <div class="server-header">
-            <div class="server-name-wrapper">
-                <div class="server-name">{{ server.name }}</div>
+<div class="server-wrapper">
+    <div class="server-grid">
+        {% for server in servers %}
+        <div class="server-card" data-server-id="{{ server.id }}">
+            <div class="server-header">
+                <div class="server-name-wrapper">
+                    <div class="server-name">{{ server.name }}</div>
+                </div>
+                <img class="server-icon" src="/static/images/logo192.png" alt="Иконка сервера" />
             </div>
-            <img class="server-icon" src="/static/images/logo192.png" alt="Иконка сервера" />
+            
+            <div class="server-content">
+                <div class="server-info">
+                    <div class="info-row">
+                        <span class="info-label">ip</span>
+                        <span class="info-value ip-address" onclick="copyServerIP('{{ server.address }}')">{{ server.address }}</span>
+                    </div>
+
+                    <div class="info-row">
+                        <span class="info-label">version</span>
+                        <span class="info-value version-value">{{ server.version }}</span>
+                    </div>
+                    
+                    {% if server.required_mods %}
+                    <div class="mods-section info-row">
+                        <span class="info-label" >required</span>
+                        <div class="mods-list info-value">
+                            {% for mod in server.required_mods %}
+                            <div>- <a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if server.optional_mods %}
+                    <div class="mods-section info-row">
+                        <span class="info-label">optional mods</span>
+                        <div class="mods-list info-value">
+                            {% for mod in server.optional_mods %}
+                            <div>- <a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="status-section">
+                    <div class="players">
+                        <span class="info-label">players</span>
+                        <span class="info-value players-info">{{ server.players }}</span>
+                        <div class="players-tooltip">
+                            {% if server.players.list and server.players.list.length > 0 %}
+                                <div class="players-list">
+                                    {% for player in server.players.list %}
+                                        <span>{{ player }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="players-list">No players online</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <span class="status {{ server.status }}">{{ server.status }}</span>
+                </div>
+            </div>
+
         </div>
-        
-        <div class="server-content">
-            <div class="server-info">
-                <div class="info-row">
-                    <span class="info-label">ip</span>
-                    <span class="info-value ip-address" onclick="copyServerIP('{{ server.address }}')">{{ server.address }}</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">version</span>
-                    <span class="info-value version-value">{{ server.version }}</span>
-                </div>
-                
-                {% if server.required_mods %}
-                <div class="mods-section info-row">
-                    <span class="info-label" >required</span>
-                    <div class="mods-list info-value">
-                        {% for mod in server.required_mods %}
-                        <div>- <a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endif %}
-
-                {% if server.optional_mods %}
-                <div class="mods-section info-row">
-                    <span class="info-label">optional mods</span>
-                    <div class="mods-list info-value">
-                        {% for mod in server.optional_mods %}
-                        <div>- <a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endif %}
-
-            </div>
-            <div class="status-section">
-                <div class="players">
-                    <span class="info-label">players</span>
-                    <span class="info-value players-info">{{ server.players }}</span>
-                    <div class="players-tooltip">
-                        {% if server.players.list and server.players.list.length > 0 %}
-                            <div class="players-list">
-                                {% for player in server.players.list %}
-                                    <span>{{ player }}</span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="players-list">No players online</div>
-                        {% endif %}
-                    </div>
-                </div>
-                <span class="status {{ server.status }}">{{ server.status }}</span>
-            </div>
-        </div>
-
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 
 <div class="copy-notification" id="copyNotification">copied.</div>
