@@ -578,7 +578,7 @@
 
                             // Приоритет статуса из панели
                             var status = data.panel_status || (data.online ? 'online' : 'offline');
-                            if (status = "running") {
+                            if (status === "running") {
                                 status = "online";
                             }
                             
