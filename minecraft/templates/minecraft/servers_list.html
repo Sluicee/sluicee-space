@@ -67,45 +67,19 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% if server.enable_panel_control and server.panel_configured %}
+                    <div class="panel-controls">
+                        <button class="panel-btn start-btn" onclick="sendPanelAction('{{ server.id }}', 'start')">Start</button>
+                    </div>
+                    {% endif %}
                     <span class="status {{ server.status }}">{{ server.status }}</span>
                 </div>
             </div>
-
         </div>
         {% endfor %}
     </div>
 </div>
 
 <div class="copy-notification" id="copyNotification">copied.</div>
-
-<script>
-const iconElement = card.querySelector('.server-icon');
-if (server.icon && iconElement) {
-    iconElement.src = 'data:image/png;base64,' + server.icon;
-}
-
-
-function copyServerIP(ip) {
-    navigator.clipboard.writeText(ip).then(function() {
-        const notification = document.getElementById('copyNotification');
-        notification.classList.add('show');
-        
-        setTimeout(() => {
-            notification.classList.remove('show');
-        }, 1000);
-    }).catch(function(err) {
-        console.error('Не удалось скопировать: ', err);
-        const notification = document.getElementById('copyNotification');
-        notification.textContent = 'Copy failed!';
-        notification.classList.add('show');
-        
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                notification.textContent = 'copied.';
-            }, 300);
-        }, 1000);
-    });
-}
-</script>
+<div class="action-notification" id="actionNotification"></div>
 {% endblock %}

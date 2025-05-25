@@ -5,6 +5,9 @@ class MinecraftServer(models.Model):
         ('online', 'Online'),
         ('offline', 'Offline'),
         ('maintenance', 'Maintenance'),
+        ('maintenance', 'Maintenance'),
+        ('starting', 'Starting'),
+        ('stopping', 'Stopping')
     ]
 
     name = models.CharField(max_length=100, verbose_name='Название сервера')
@@ -12,6 +15,12 @@ class MinecraftServer(models.Model):
     version = models.CharField(max_length=20, verbose_name='Версия Minecraft')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='online', verbose_name='Статус')
     max_players = models.IntegerField(default=20, verbose_name='Максимальное количество игроков')
+
+        # Поля для панели управления
+    enable_panel_control = models.BooleanField(default=False, verbose_name='Включить управление через панель')
+    panel_url = models.URLField(verbose_name='URL панели', blank=True, null=True)
+    panel_api_key = models.CharField(max_length=255, verbose_name='API ключ клиента с доступом', blank=True, null=True)
+    panel_server_uuid = models.CharField(max_length=36, verbose_name='UUID сервера в панели', blank=True, null=True)
     
     # Поля для модов
     required_mods = models.TextField(verbose_name='Обязательные моды (каждый с новой строки)', blank=True, 

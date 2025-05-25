@@ -30,6 +30,8 @@ urlpatterns = [
     path('auth/', views.enter_access_code, name='enter_access_code'),  # Страница ввода кода
     path('servers/', views.minecraft_servers_list, name='servers_list'),  # Защищенный список
     path('servers/api/<int:server_id>/status/', views.server_status_api, name='server_status'),
+    path('servers/api/<int:server_id>/status/', views.server_status_api, name='server_status_api'),
+    path('servers/api/<int:server_id>/panel/<str:action>/', views.server_panel_action, name='server_panel_action'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
