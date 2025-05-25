@@ -499,7 +499,28 @@
     </div>
     
     <script>
-
+        function copyServerIP(ip) {
+            navigator.clipboard.writeText(ip).then(function() {
+                const notification = document.getElementById('copyNotification');
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 1000);
+            }).catch(function(err) {
+                console.error('Не удалось скопировать: ', err);
+                const notification = document.getElementById('copyNotification');
+                notification.textContent = 'Copy failed!';
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        notification.textContent = 'copied.';
+                    }, 300);
+                }, 1000);
+            });
+        }
         function sendPanelAction(serverId, action) {
             fetch(`/servers/api/${serverId}/panel/${action}/`, {
                 method: 'POST',
@@ -556,7 +577,10 @@
                             const startBtn = card.querySelector('.panel-controls')
 
                             // Приоритет статуса из панели
-                            const status = data.panel_status || (data.online ? 'online' : 'offline');
+                            var status = data.panel_status || (data.online ? 'online' : 'offline');
+                            if (status = "running") {
+                                status = "online";
+                            }
                             
                             statusElement.textContent = status;
                             statusElement.className = 'status ' + status;
