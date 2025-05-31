@@ -26,6 +26,9 @@
                     <div class="info-row">
                         <span class="info-label">version</span>
                         <span class="info-value version-value">{{ server.version }}</span>
+                        {% if server.map_link %}
+                        <span class="info-value version-value"><a href="https://{{ server.map_link }}">map</a></span>
+                        {% endif %}
                     </div>
                     
                     {% if server.required_mods %}
@@ -41,7 +44,7 @@
 
                     {% if server.optional_mods %}
                     <div class="mods-section info-row">
-                        <span class="info-label">optional mods</span>
+                        <span class="info-label">optional</span>
                         <div class="mods-list info-value">
                             {% for mod in server.optional_mods %}
                             <div>- <a href="{{ mod.1 }}" target="_blank">{{ mod.0 }}</a></div>

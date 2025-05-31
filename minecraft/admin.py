@@ -3,13 +3,13 @@ from .models import MinecraftServer
 from .models import AccessCode
 
 class MinecraftServerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'address', 'version', 'enable_panel_control')
+    list_display = ('name', 'address', 'version', 'enable_panel_control', 'map_link')
     list_filter = ('status', 'enable_panel_control', 'version')
     search_fields = ('name', 'address', 'panel_server_uuid')
     list_editable = ('address', 'version')
     fieldsets = (
         ('Основная информация', {
-            'fields': ('name', 'address', 'version', 'status', 'max_players', 'favicon')
+            'fields': ('name', 'address', 'version', 'status', 'max_players', 'favicon', 'map_link')
         }),
         ('Моды', {
             'fields': ('required_mods', 'optional_mods'),

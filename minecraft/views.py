@@ -27,6 +27,7 @@ def minecraft_servers_list(request):
             'optional_mods': server.get_optional_mods_list(),
             'enable_panel_control': server.enable_panel_control,  # Добавляем это поле
             'panel_configured': bool(server.panel_url and server.panel_api_key and server.panel_server_uuid),
+            'map_link': server.map_link,
         })
     
     return render(request, 'minecraft/servers_list.html', {

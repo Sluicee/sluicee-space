@@ -15,6 +15,7 @@ class MinecraftServer(models.Model):
     version = models.CharField(max_length=20, verbose_name='Версия Minecraft')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='online', verbose_name='Статус')
     max_players = models.IntegerField(default=20, verbose_name='Максимальное количество игроков')
+    map_link = models.CharField(max_length=255, verbose_name='Ссылка на карту', null=True, blank=True)
 
         # Поля для панели управления
     enable_panel_control = models.BooleanField(default=False, verbose_name='Включить управление через панель')
