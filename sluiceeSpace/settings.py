@@ -30,6 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = ['mc.sluicee.ru', '.sluicee.ru', 'sluicee.ru', 'www.sluicee.ru', 'sluicee.space', 'www.sluicee.space', '127.0.0.1', 'localhost', 'servers.localhost', 'mc.localhost', '.localhost',]
+CSRF_TRUSTED_ORIGINS=["https://sluicee.ru"]
 
 APPEND_SLASH = True
 
