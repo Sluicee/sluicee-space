@@ -28,18 +28,18 @@
             width: 100%;
             max-width: 1440px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 60px 20px 20px 20px;
             box-sizing: border-box;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Заголовок */
         .header {
             text-align: center;
-            position: absolute;
-            left: 0; 
-            right: 0; 
-            top: 100px;
-            margin-inline: auto; 
+            position: relative;
+            margin: 0 auto 40px auto;
             width: fit-content;
         }
 
@@ -51,8 +51,11 @@
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding-top: 30px;
+            }
             .header {
-                margin-top: 100px;
+                margin: 0 auto 20px auto;
             }
             
             .header h1 {
@@ -66,7 +69,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: calc(100vh - 24px);
+            flex-grow: 1;
             padding: 30px;
             box-sizing: border-box;
         }
