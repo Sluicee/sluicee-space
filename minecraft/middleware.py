@@ -10,6 +10,7 @@ class MinecraftSubdomainMiddleware:
             '/servers/api/',
             '/static/',
             '/media/',
+            '/upload_media/',
             '/favicon.ico',
         ]
 

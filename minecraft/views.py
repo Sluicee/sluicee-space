@@ -9,6 +9,9 @@ from .models import MinecraftServer
 import base64
 import traceback
 import requests
+import a2s
+import socket
+import re
 
 def minecraft_servers_list(request):
     """Главная страница поддомена с серверами"""
@@ -19,6 +22,8 @@ def minecraft_servers_list(request):
         servers.append({
             'id': server.id,
             'name': server.name,
+            'game': server.game,
+            'game_display_name': server.get_game_display_name(),
             'address': server.address,
             'version': server.version,
             'players': f'0/{server.max_players}',  # Начальное значение, будет обновлено через API
@@ -28,6 +33,7 @@ def minecraft_servers_list(request):
             'enable_panel_control': server.enable_panel_control,  # Добавляем это поле
             'panel_configured': bool(server.panel_url and server.panel_api_key and server.panel_server_uuid),
             'map_link': server.map_link,
+            'favicon': server.favicon,
         })
     
     return render(request, 'minecraft/servers_list.html', {
@@ -80,31 +86,93 @@ def server_status_api(request, server_id):
                 print(f"Error fetching panel status: {e}")
                 # Продолжаем с обычной проверкой, если запрос к панели не удался
 
-        # Обычная проверка статуса Minecraft сервера
-        if server.address:
-            mc_server = JavaServer.lookup(server.address)
-            status = mc_server.status()
+        # Проверяем тип игры и применяем соответствующую логику
+        if server.game == 'minecraft':
+            # Обычная проверка статуса Minecraft сервера
+            if server.address:
+                mc_server = JavaServer.lookup(server.address)
+                status = mc_server.status()
 
-            icon = status.icon
-            icon_base64 = icon.split(',')[1] if icon else None
+                icon = status.icon
+                icon_base64 = icon.split(',')[1] if icon else None
 
-            status_data = {
+                status_data = {
+                    'server_id': server_id,
+                    'online': True,
+                    'panel_status': panel_status,
+                    'players': {
+                        'online': status.players.online,
+                        'max': status.players.max,
+                        'list': [player.name for player in (status.players.sample or [])]
+                    },
+                    'version': status.version.name,
+                    'motd': status.description.get('text') if isinstance(status.description, dict) else status.description,
+                    'ping': status.latency,
+                    'icon': icon_base64
+                }
+                return JsonResponse(status_data)
+        elif server.game in ['halflife', 'garrysmod']:
+            # Для Half-Life и Garry's Mod используем Source Query (a2s)
+            if server.address:
+                try:
+                    # Парсим IP и порт из адреса
+                    address_parts = server.address.split(':')
+                    ip = address_parts[0]
+                    port = int(address_parts[1]) if len(address_parts) > 1 else 27015
+                    
+                    # Получаем информацию о сервере
+                    address = (ip, port)
+                    info = a2s.info(address)
+                    
+                    # Получаем список игроков
+                    try:
+                        players = a2s.players(address)
+                        player_list = [player.name for player in players]
+                    except:
+                        player_list = []
+                    
+                    status_data = {
+                        'server_id': server_id,
+                        'online': True,
+                        'panel_status': panel_status,
+                        'players': {
+                            'online': info.player_count,
+                            'max': info.max_players,
+                            'list': player_list
+                        },
+                        'version': server.version,
+                        'motd': info.server_name,
+                        'ping': None,  # a2s не предоставляет ping напрямую
+                        'icon': None
+                    }
+                    return JsonResponse(status_data)
+                    
+                except a2s.BrokenMessageError:
+                    print(f"Error: Broken message from {server.address}")
+                except socket.timeout:
+                    print(f"Error: Timeout connecting to {server.address}")
+                except socket.error as e:
+                    print(f"Error: Socket error connecting to {server.address}: {e}")
+                except Exception as e:
+                    print(f"Error: Unknown error for {server.address}: {e}")
+            
+            # Если адрес не указан или произошла ошибка, возвращаем offline статус
+            return JsonResponse({
                 'server_id': server_id,
-                'online': True,
+                'online': False,
                 'panel_status': panel_status,
                 'players': {
-                    'online': status.players.online,
-                    'max': status.players.max,
-                    'list': [player.name for player in (status.players.sample or [])]
+                    'online': 0,
+                    'max': server.max_players,
+                    'list': []
                 },
-                'version': status.version.name,
-                'motd': status.description.get('text') if isinstance(status.description, dict) else status.description,
-                'ping': status.latency,
-                'icon': icon_base64
-            }
-            return JsonResponse(status_data)
+                'version': server.version,
+                'motd': f'{server.game.title()} server - offline',
+                'ping': None,
+                'icon': None
+            })
         
-        # Если адрес не указан, возвращаем статус из панели или offline
+        # Если адрес не указан или неизвестный тип игры, возвращаем статус из панели или offline
         return JsonResponse({
             'server_id': server_id,
             'online': False,

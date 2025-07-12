@@ -5,14 +5,20 @@ class MinecraftServer(models.Model):
         ('online', 'Online'),
         ('offline', 'Offline'),
         ('maintenance', 'Maintenance'),
-        ('maintenance', 'Maintenance'),
         ('starting', 'Starting'),
         ('stopping', 'Stopping')
     ]
 
+    GAME_CHOICES = [
+        ('minecraft', 'Minecraft'),
+        ('halflife', 'Half-Life'),
+        ('garrysmod', 'Garry\'s Mod'),
+    ]
+
     name = models.CharField(max_length=100, verbose_name='Название сервера')
+    game = models.CharField(max_length=20, choices=GAME_CHOICES, default='minecraft', verbose_name='Тип игры')
     address  = models.CharField(max_length=100, verbose_name='IP адрес', null=True, blank=True)
-    version = models.CharField(max_length=20, verbose_name='Версия Minecraft')
+    version = models.CharField(max_length=20, verbose_name='Версия игры', null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='online', verbose_name='Статус')
     max_players = models.IntegerField(default=20, verbose_name='Максимальное количество игроков')
     map_link = models.CharField(max_length=255, verbose_name='Ссылка на карту', null=True, blank=True)
@@ -46,6 +52,15 @@ class MinecraftServer(models.Model):
         if not self.optional_mods:
             return []
         return [mod.split('|') for mod in self.optional_mods.split('\n') if mod.strip()]
+
+    def get_game_display_name(self):
+        """Возвращает красивое название игры для отображения"""
+        game_names = {
+            'minecraft': 'Minecraft',
+            'halflife': 'Half-Life',
+            'garrysmod': 'Garry\'s Mod'
+        }
+        return game_names.get(self.game, self.game.title())
 
     class Meta:
         verbose_name = 'Minecraft сервер'

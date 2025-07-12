@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="header">
-    <h1>minecraft</h1>
+    <h1>servers</h1>
 </div>
 
 <div class="server-wrapper">
@@ -13,19 +13,30 @@
                 <div class="server-name-wrapper">
                     <div class="server-name">{{ server.name }}</div>
                 </div>
-                <img class="server-icon" src="/static/images/logo192.png" alt="Иконка сервера" />
+                {% if server.favicon %}
+                    <img class="server-icon" src="{{ server.favicon.url }}" alt="Иконка сервера" />
+                {% else %}
+                    <img class="server-icon" src="/static/images/logo192.png" alt="Иконка сервера" />
+                {% endif %}
             </div>
             
             <div class="server-content">
                 <div class="server-info">
                     <div class="info-row">
+                        <span class="info-label">game</span>
+                        <span class="info-value game-value">{{ server.game_display_name }}</span>
+                    </div>
+
+                    <div class="info-row">
                         <span class="info-label">ip</span>
                         <span class="info-value ip-address" onclick="copyServerIP('{{ server.address }}')">{{ server.address }}</span>
                     </div>
 
-                    <div class="info-row">
+                    <div class="info-row"> 
+                        {% if server.version %}
                         <span class="info-label">version</span>
                         <span class="info-value version-value">{{ server.version }}</span>
+                        {% endif %}
                         {% if server.map_link %}
                         <span class="info-value version-value"><a href="https://{{ server.map_link }}">map</a></span>
                         {% endif %}
