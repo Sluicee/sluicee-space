@@ -157,6 +157,7 @@ def server_status_api(request, server_id):
                     print(f"Error: Unknown error for {server.address}: {e}")
             
             # Если адрес не указан или произошла ошибка, возвращаем offline статус
+            print("Если адрес не указан или произошла ошибка, возвращаем offline статус")
             return JsonResponse({
                 'server_id': server_id,
                 'online': False,
@@ -173,6 +174,7 @@ def server_status_api(request, server_id):
             })
         
         # Если адрес не указан или неизвестный тип игры, возвращаем статус из панели или offline
+        print("Если адрес не указан или неизвестный тип игры, возвращаем статус из панели или offline")
         return JsonResponse({
             'server_id': server_id,
             'online': False,
