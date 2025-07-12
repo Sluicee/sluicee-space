@@ -162,7 +162,7 @@ def server_status_api(request, server_id):
                 'online': False,
                 'panel_status': panel_status,
                 'players': {
-                    'online': 0,
+                    'online': -1,
                     'max': server.max_players,
                     'list': []
                 },
@@ -178,7 +178,7 @@ def server_status_api(request, server_id):
             'online': False,
             'panel_status': panel_status,
             'players': {
-                'online': 0,
+                'online': -2,
                 'max': server.max_players,
                 'list': []
             },
